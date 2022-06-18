@@ -23,6 +23,7 @@ var getCityInfo = function(city) {
     });
 };
 
+
 var futureContainerEl = document.querySelector(".future-container");
 var futureBoxEl = document.querySelector(".future-box");
 var getWeatherInfo = function(city, lat, lon) {
@@ -31,8 +32,8 @@ var getWeatherInfo = function(city, lat, lon) {
     
     fetch(apiUrl).then(function (response) {
         response.json().then(function(data) {
-            date = Date()
-            console.log(data);
+            date = new Date();
+            date = date.toLocaleString().substring(0, 9);
             forecastHeader(city, date);
 
             var temp = data.current.temp;
@@ -40,7 +41,8 @@ var getWeatherInfo = function(city, lat, lon) {
             temp = temp.toFixed(2);
             var humid = data.current.humidity; 
             windSpeed = data.current.wind_speed;
-            UV = data.current.uvi;            
+            UV = data.current.uvi; 
+            futureContainerEl.innerHTML = "";           
             forecastDisplay(temp, humid, windSpeed, UV);
             
             for (var i = 0; i < 5; i++) {
@@ -55,6 +57,13 @@ var getWeatherInfo = function(city, lat, lon) {
                 var futureDisplayEl = document.createElement("div");
                 futureDisplayEl.classList = "col-2 future-box"
 
+                var futureDate = new Date();
+                futureDate.setDate(futureDate.getDate() + i + 1);
+                futureDate = futureDate.toLocaleString().substring(0, 9);
+                console.log(futureDate);
+                // create date header
+                var futureDateEl = document.createElement("h4");
+                futureDateEl.textContent = futureDate;
                 // create p items to display info
                 var futureTempDisplay = document.createElement("p");
                 futureTempDisplay.textContent = "Temp: " + futureTemp + " °F";
@@ -64,6 +73,7 @@ var getWeatherInfo = function(city, lat, lon) {
                 futureHumidityDisplay.textContent = "Humidity: " + futureHumidity + "%";
 
                 // append to container
+                futureDisplayEl.appendChild(futureDateEl);
                 futureDisplayEl.appendChild(futureTempDisplay);
                 futureDisplayEl.appendChild(futureWindDisplay);
                 futureDisplayEl.appendChild(futureHumidityDisplay);
