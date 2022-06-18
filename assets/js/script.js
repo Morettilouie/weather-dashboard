@@ -8,7 +8,7 @@ var formSearchHandler = function(event) {
 
     if (cityName) {
         getCityInfo(cityName);
-        //cityInputEl.value = "";
+        cityInputEl.value = "";
     } else {
         alert("Please enter a city.")
     }
@@ -28,7 +28,7 @@ var getWeatherInfo = function(city, lat, lon) {
     fetch(apiUrl).then(function (response) {
         response.json().then(function(data) {
             date = Date()
-            //console.log(data);
+            console.log(data);
             forecastHeader(city, date);
 
             var temp = data.current.temp;
@@ -36,14 +36,41 @@ var getWeatherInfo = function(city, lat, lon) {
             var humid = data.current.humidity; 
             windSpeed = data.current.wind_speed;
             UV = data.current.uvi;            
-            console.log(temp, humid, windSpeed, UV);
+            forecastDisplay(temp, humid, windSpeed, UV);
+
+            for (var i = 0; i < 5; i++) {
+                var futureTemp = data.daily[i].temp.day;
+                console.log(futureTemp);
+                var futureWind = data.daily[i].wind_speed;
+                console.log(futureWind);
+                var futureHumidity = data.daily[i].humidity;
+                console.log(futureHumidity);
+                futureWeatherConditions(futureTemp, futureWind, futureHumidity)
+            };
         })
     })
 }
 var forecastHeader = function(city, date) {
-    var currentForecast = document.querySelector("#current-forecast");
-    var header = currentForecast.createElement("h3");
-    header.textcontent = city +", "+ date;
+    //var currentForecast = document.querySelector("#current-forecast");
+    //var header = currentForecast.createElement("h3");
+    //header.textcontent = city +", "+ date;
+    var header = document.querySelector("#city-header");
+    header.textContent =  city+" "+ date;
+}
+
+var forecastDisplay = function(temp, humid, windSpeed, UV) {
+    var temperature = document.querySelector(".temp");
+    temperature.textContent = temp + " F";
+    var humidity = document.querySelector(".humidity");
+    humidity.textContent = humid + "%";
+    var wind = document.querySelector(".wind");
+    wind.textContent = windSpeed + " MPH";
+    var uvIndex = document.querySelector(".uv-index");
+    uvIndex.textContent = UV;
+}
+// need to figure out how to get each value seperately
+var futureWeatherConditions = function(futureTemp, futureWind, futureHumidity) {
+    console.log(futureTemp)
 }
 
 userFormEl.addEventListener("submit", formSearchHandler);

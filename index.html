@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
     <title>Weather Dashboard</title>
 </head>
+
 <body>
     <header>
         <h1>Weather Dashboard</h1>
@@ -21,14 +23,24 @@
         </div>
         <div id="forecast" class="col-12 col-md-9">
             <div id="current-forecast" class="col-12">
-                <h3>City</h3>
+                <h3 id="city-header"></h3>
+                <p>Temp: <span class="temp"></span></p>
+                <p>Wind: <span class="wind"></span></p>
+                <p>Humidity: <span class="humidity"></span></p>
+                <p>UV Index: <span class="uv-index"></span></p>
             </div>
-            <div class="col-12">
-                <h3>5-Day Forecast</h3>
+            <div class="col-12 row">
+                <h3 class="col-12">5-Day Forecast</h3>
+                <div id="future-day1" class="col-2"></div>
+                <div id="future-day2" class="col-2"></div>
+                <div id="future-day3" class="col-2"></div>
+                <div id="future-day4" class="col-2"></div>
+                <div id="future-day5" class="col-2"></div>
             </div>
         </div>
     </main>
 
     <script src="./assets/js/script.js"></script>
 </body>
+
 </html>
