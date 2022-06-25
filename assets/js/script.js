@@ -1,6 +1,6 @@
 var userFormEl = document.querySelector("#user-form");
 var cityInputEl = document.querySelector("#city-name");
-
+var cityHistory = []
 var formSearchHandler = function(event) {
     event.preventDefault();
 
@@ -14,6 +14,7 @@ var formSearchHandler = function(event) {
     }
 };
 var getCityInfo = function(city) {
+    saveSearch(city);
     var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid=cf5d67cbcf13a4639df8ab5a787fe6cf";
 
     fetch(apiUrl).then(function (response) {
@@ -22,6 +23,13 @@ var getCityInfo = function(city) {
         });
     });
 };
+
+var saveSearch = function(city) {
+
+    cityHistory.push(city);
+    localStorage.setItem("Search History", cityHistory);
+
+}
 
 
 var futureContainerEl = document.querySelector(".future-container");
@@ -42,9 +50,18 @@ var getWeatherInfo = function(city, lat, lon) {
             var humid = data.current.humidity; 
             windSpeed = data.current.wind_speed;
             UV = data.current.uvi; 
+            console.log(UV)
             futureContainerEl.innerHTML = "";           
             forecastDisplay(temp, humid, windSpeed, UV);
+
+            history = localStorage.getItem("Search History");
+            console.log(history);
             
+            var futureHeaderEl = document.createElement("h3");
+            futureHeaderEl.classList = "col-12";
+            futureHeaderEl.textContent = "5 Day Forecast:";
+            futureContainerEl.appendChild(futureHeaderEl);
+
             for (var i = 0; i < 5; i++) {
                 
                 var futureTemp = data.daily[i].temp.day;
@@ -55,13 +72,12 @@ var getWeatherInfo = function(city, lat, lon) {
 
                 // create a future weather box div
                 var futureDisplayEl = document.createElement("div");
-                futureDisplayEl.classList = "col-2 future-box"
+                futureDisplayEl.classList = "future-box text-light"
 
+                // create date header
                 var futureDate = new Date();
                 futureDate.setDate(futureDate.getDate() + i + 1);
-                futureDate = futureDate.toLocaleString().substring(0, 9);
-                console.log(futureDate);
-                // create date header
+                futureDate = futureDate.toLocaleString().substring(0, 9);                
                 var futureDateEl = document.createElement("h4");
                 futureDateEl.textContent = futureDate;
                 // create p items to display info
@@ -89,7 +105,7 @@ var forecastHeader = function(city, date) {
     //var header = currentForecast.createElement("h3");
     //header.textcontent = city +", "+ date;
     var header = document.querySelector("#city-header");
-    header.textContent =  city+" "+ date;
+    header.textContent =  city+" ("+ date +")";
 }
 
 var forecastDisplay = function(temp, humid, windSpeed, UV) {
@@ -101,6 +117,22 @@ var forecastDisplay = function(temp, humid, windSpeed, UV) {
     wind.textContent = windSpeed + " MPH";
     var uvIndex = document.querySelector(".uv-index");
     uvIndex.textContent = UV;
+    uvIndex.classList = "text-light"
+     if (UV < 3) {
+         uvIndex.style.backgroundColor = "green";
+     }
+     if (UV > 2 && UV < 6) {
+         uvIndex.style.backgroundColor = "yellow";
+     }
+     if (UV > 5 && UV < 8) {
+        uvIndex.style.backgroundColor = "orange";
+     }
+     if (UV > 7 && UV < 11) {
+        uvIndex.style.backgroundColor = "red";
+     }
+     if (UV > 10) {
+        uvIndex.style.backgroundColor = "purple";
+     }
 }
 
 userFormEl.addEventListener("submit", formSearchHandler);

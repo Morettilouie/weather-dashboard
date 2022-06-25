@@ -1,0 +1,19 @@
+#current-forecast {
+    border: 3px solid black;
+}
+#forecast {
+    display: flex;
+    flex-wrap: wrap;
+}
+.current-forecast {
+    width: 100%;
+}
+.future-container {
+    display: flex;
+}
+.future-box {
+    background-color: navy;
+    width: 19%;
+    margin: 0 auto;
+    flex: space-between;
+}
