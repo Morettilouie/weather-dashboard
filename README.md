@@ -8,6 +8,8 @@ Aquired the responses for the necessary data(temp, wind, etc) and displayed them
 
 Assigned color for the level of UV index
 
-<img src="./assets/images/Weather-App-Screenshot" alt="Screen shot of Weather Dashboard"/>
+Added local storage to display buttons for search history after each search
+
+<img src="./assets/images/Weather-App-Screenshot.png" alt="Screen shot of Weather Dashboard"/>
 
 <a href="https://morettilouie.github.io/weather-dashboard/">Live URL from github</a>

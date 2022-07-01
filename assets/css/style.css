@@ -22,3 +22,26 @@ header {
     margin: 0 auto;
     flex: space-between;
 }
+button {
+    width: 100%;
+    margin: 5px 0;
+    border: none;
+    border-radius: 4px;
+}
+.search-container {
+    border-bottom: rgb(0, 0, 0, 0.5) 2px solid;
+}
+form, #search-history {
+    margin: 20px 0;
+}
+input {
+    width: 100%;
+}
+.search-bar {
+    background-color: rgb(69, 142, 252);
+    color: white;
+}
+.history-item {
+    background-color: rgb(187, 185, 185);
+}
+

@@ -28,7 +28,19 @@ var saveSearch = function (city) {
 
     cityHistory.push(city);
     localStorage.setItem("Search History", cityHistory);
+    loadHistory(cityHistory);
 
+}
+
+var searchHistoryEl = document.querySelector("#search-history");
+var loadHistory = function (cityHistory) {
+    searchHistoryEl.textContent = "";
+    for (i = 0; i < cityHistory.length; i++){
+        var historyItemEl = document.createElement("button");
+        historyItemEl.classList = "history-item";
+        historyItemEl.textContent = cityHistory[i];
+        searchHistoryEl.appendChild(historyItemEl);
+    }
 }
 
 
@@ -54,8 +66,6 @@ var getWeatherInfo = function (city, lat, lon) {
             futureContainerEl.innerHTML = "";
             forecastDisplay(temp, humid, windSpeed, UV);
 
-            history = localStorage.getItem("Search History");
-            console.log(history);
 
             var futureHeaderEl = document.createElement("h3");
             futureHeaderEl.classList = "col-12";
@@ -117,7 +127,7 @@ var forecastDisplay = function (temp, humid, windSpeed, UV) {
     wind.textContent = windSpeed + " MPH";
     var uvIndex = document.querySelector(".uv-index");
     uvIndex.textContent = UV;
-    uvIndex.classList = "text-light"
+    uvIndex.classList.add("text-light");
     if (UV < 3) {
         uvIndex.style.backgroundColor = "green";
     }
@@ -136,3 +146,4 @@ var forecastDisplay = function (temp, humid, windSpeed, UV) {
 }
 
 userFormEl.addEventListener("submit", formSearchHandler);
+historyItemEl.addEventListener("click", getCityInfo(cityHistory))
