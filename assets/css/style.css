@@ -1,3 +1,8 @@
+header {
+    background-color: blue;
+    color: white;
+    text-align: center;
+}
 #current-forecast {
     border: 3px solid black;
 }
